@@ -1,5 +1,6 @@
 import React from 'react';
 import Logo from '../images/Logo.png'
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -8,20 +9,50 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Logo or Brand Name */}
           <div className="mb-4 md:mb-0">
-            <h1 className="text-2xl font-bold text-yellow-500 "><img src={Logo} alt="logo" className='bg-white rounded-lg' height={100} width={100}/></h1>
+            <h1 className="text-2xl font-bold text-yellow-500 ">
+              <img
+                src={Logo}
+                alt="logo"
+                className="bg-white rounded-lg"
+                height={100}
+                width={100}
+              />
+            </h1>
           </div>
 
           {/* Links Section */}
           <div className="flex space-x-6">
-            <a href="/" className="hover:text-yellow-500 transition duration-300">Home</a>
-            <a href="/about" className="hover:text-yellow-500 transition duration-300">About</a>
-            <a href="/contact" className="hover:text-yellow-500 transition duration-300">Contact</a>
-            <a href="/privacy" className="hover:text-yellow-500 transition duration-300">Privacy Policy</a>
+            <Link
+              to="/home"
+              className="hover:text-yellow-500 transition duration-300"
+            >
+              Home
+            </Link>
+            <Link
+              to="/about-us"
+              className="hover:text-yellow-500 transition duration-300"
+            >
+              About Us
+            </Link>
+            <Link
+              to="/contact-us"
+              className="hover:text-yellow-500 transition duration-300"
+            >
+              Contact
+            </Link>
+            <Link
+              to="/privacy"
+              className="hover:text-yellow-500 transition duration-300"
+            >
+              Privacy
+            </Link>
           </div>
         </div>
 
         <div className="flex justify-center items-center mt-6">
-          <p className="text-sm text-white">© {new Date().getFullYear()} Facial Police. All Rights Reserved.</p>
+          <p className="text-sm text-white">
+            © {new Date().getFullYear()} Facial Police. All Rights Reserved.
+          </p>
         </div>
       </div>
     </footer>
