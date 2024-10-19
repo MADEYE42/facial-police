@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import Footer from "../components/Footer";
 import Logo from "../images/Logo.png";
@@ -6,11 +6,8 @@ import Logo from "../images/Logo.png";
 const ThreeD = () => {
   const [isOptionsVisible, setOptionsVisible] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
-  const [videoBlob, setVideoBlob] = useState(null);
   const videoRef = useRef(null);
-  const mediaRecorderRef = useRef(null);
-  const [stream, setStream] = useState(null);
-  const chunks = useRef([]);
+  const ws = useRef(null);
 
   const toggleOptions = () => {
     setOptionsVisible((prevState) => !prevState);
@@ -20,52 +17,32 @@ const ThreeD = () => {
     window.history.back();
   };
 
-  const startRecording = async () => {
-    try {
-      const userStream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
-      videoRef.current.srcObject = userStream;
-      videoRef.current.play();
-      setStream(userStream);
-
-      const mediaRecorder = new MediaRecorder(userStream);
-      mediaRecorderRef.current = mediaRecorder;
-
-      mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          chunks.current.push(event.data);
-        }
+  useEffect(() => {
+    if (isRecording) {
+      ws.current = new WebSocket("ws://localhost:6789");
+      ws.current.onmessage = (event) => {
+        const image = event.data;
+        videoRef.current.src = `data:image/jpeg;base64,${image}`;
       };
-
-      mediaRecorder.onstop = () => {
-        const videoBlob = new Blob(chunks.current, { type: "video/mp4" });
-        setVideoBlob(videoBlob);
-        chunks.current = [];
+      ws.current.onerror = (error) => {
+        console.error("WebSocket error:", error);
       };
-
-      mediaRecorder.start();
-      setIsRecording(true);
-    } catch (err) {
-      console.error("Error accessing webcam:", err);
+      ws.current.onclose = () => {
+        console.log("WebSocket closed");
+      };
+    } else {
+      if (ws.current) {
+        ws.current.close();
+      }
     }
+  }, [isRecording]);
+
+  const startRecording = () => {
+    setIsRecording(true);
   };
 
   const stopRecording = () => {
-    mediaRecorderRef.current.stop();
-    stream.getTracks().forEach((track) => track.stop());
     setIsRecording(false);
-  };
-
-  const downloadRecording = () => {
-    if (videoBlob) {
-      const url = URL.createObjectURL(videoBlob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "recorded-video.mp4";
-      link.click();
-    }
   };
 
   return (
@@ -121,12 +98,13 @@ const ThreeD = () => {
             Steps to Use:
           </h2>
           <ol className="list-decimal mx-4 text-left text-lg text-white mb-4">
-            <li>Click the input field below to start recording.</li>
-            <li>Click "Stop Recording" when done, and download the video.</li>
+            <li>Click "Start Recording" to begin the video stream.</li>
+            <li>The video with face detection will be displayed below.</li>
+            <li>Click "Stop Recording" to end the video stream.</li>
           </ol>
         </div>
 
-        {/* Video Recording */}
+        {/* Video Display */}
         <div className="mt-6 flex flex-col items-center w-full max-w-3xl">
           {!isRecording ? (
             <button
@@ -138,39 +116,22 @@ const ThreeD = () => {
           ) : (
             <button
               onClick={stopRecording}
-              className="bg-red-500 text-black px-6 py-3 rounded-lg hover:bg-red-600 transition duration-300 shadow-md transform hover:scale-105 w-full mb-4"
+              className="bg-yellow-500 text-black px-6 py-3 rounded-lg hover:bg-yellow-600 transition duration-300 shadow-md transform hover:scale-105 w-full mb-4"
             >
               Stop Recording
             </button>
           )}
 
-          {videoBlob && (
-            <button
-              onClick={downloadRecording}
-              className="bg-yellow-500 text-black px-6 py-3 rounded-lg hover:bg-yellow-600 transition duration-300 shadow-md transform hover:scale-105 w-full"
-            >
-              Download Video
-            </button>
-          )}
+          <img
+            ref={videoRef}
+            alt="Video Stream"
+            className="w-full h-auto bg-black rounded-lg shadow-lg mt-4"
+          />
         </div>
-
-        {/* Webcam Display */}
-        <video ref={videoRef} className="mt-6 w-full max-w-3xl" />
-
-        {videoBlob && (
-          <div className="mt-6 text-center bg-gray-800 p-4 rounded-lg shadow-lg w-full max-w-3xl">
-            <h2 className="text-xl font-bold text-yellow-400">
-              Recorded Video:
-            </h2>
-            <p className="text-lg text-white">
-              You can download the recorded video now.
-            </p>
-          </div>
-        )}
       </div>
 
       {/* Footer */}
-      <Footer className="bg-gray-800 text-white p-4 text-center mt-auto" />
+      <Footer />
     </div>
   );
 };
