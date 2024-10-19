@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LandingPage from './components/LandingPage';
 import ThreeD from './pages/ThreeD';
+import ContactUs from "./pages/ContactUs";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/3d-face-reconstruction" element={<ThreeD />} />
           <Route path="/edit-details" element={<EditDetails />} />
-          
+          <Route path="/contact-us" element={<ContactUs />} />
         </Routes>
         <ToastContainer />
       </div>
