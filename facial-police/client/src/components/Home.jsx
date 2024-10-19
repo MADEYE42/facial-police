@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import Footer from './Footer';
 import Logo from '../images/Logo.png';
 import threeD from '../images/3d-face.jfif';
+import Blurryy from "../images/Blurryy.png";
 
 const Home = () => {
   const [isOptionsVisible, setOptionsVisible] = useState(false);
-  const initials = 'GM';
+  const initials = "GM";
 
   const toggleOptions = () => {
-    setOptionsVisible(prevState => !prevState);
+    setOptionsVisible((prevState) => !prevState);
   };
 
   return (
@@ -65,14 +66,14 @@ const Home = () => {
         </div>
         <div className="bg-white text-black rounded-lg shadow-lg p-6 max-w-sm w-full mx-4">
           <h1 className="text-2xl font-semibold mb-4 text-center">
-            Realtime Facial Reconstruction
+            Blurry face to reconstructed face
           </h1>
           <img
-            src={threeD}
-            alt="3D Face"
+            src={Blurryy}
+            alt="Blurry to clear image "
             className="w-full h-auto rounded-md mb-4"
           />
-          <Link to="/3d-face-reconstruction">
+          <Link to="/blurry-to-clear-image">
             <button className="w-full py-2 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 transition duration-300">
               Try
             </button>

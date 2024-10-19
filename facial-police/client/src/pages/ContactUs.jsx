@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Footer from "../components/Footer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ContactUs() {
   const [name, setName] = useState("");
@@ -22,18 +24,21 @@ export default function ContactUs() {
       .then((response) => response.json())
       .then((response) => {
         if (response.code === 200) {
-          alert("We received your submission, thank you!");
+          toast.success("We received your submission, thank you!");
           setName("");
           setEmail("");
           setMessage("");
         } else if (response.code === 422) {
           setError(response.message);
+          toast.error(response.message);
         } else {
           setError(response.message);
+          toast.error("Something went wrong. Please try again.");
         }
       })
       .catch((error) => {
         setError(error.message ? error.message : error);
+        toast.error(error.message ? error.message : "Error occurred!");
       });
   }
 
@@ -43,7 +48,7 @@ export default function ContactUs() {
 
   return (
     <div>
-      <div className="flex justify-center items-center min-h-screen bg-black">
+      <div className="flex justify-center items-center min-h-screen bg-black font-bold">
         <div className="bg-gray-900 p-10 rounded-lg shadow-lg w-full max-w-lg">
           <h2 className="text-3xl font-bold text-center text-yellow-500 mb-6">
             Contact Us
@@ -121,6 +126,10 @@ export default function ContactUs() {
           </button>
         </div>
       </div>
+
+      {/* Toast Container */}
+      <ToastContainer position="top-right" autoClose={5000} />
+
       <Footer />
     </div>
   );
