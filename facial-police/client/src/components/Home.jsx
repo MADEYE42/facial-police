@@ -19,7 +19,7 @@ const Home = () => {
           <div>
             <img src={Logo} alt="LOGO" height={90} width={90} />
           </div>
-          <div 
+          <div
             className="w-12 h-12 bg-yellow-500 text-black flex items-center justify-center rounded-full text-lg font-semibold cursor-pointer"
             onClick={toggleOptions}
           >
@@ -29,15 +29,15 @@ const Home = () => {
 
         {isOptionsVisible && (
           <div className="mt-4 space-y-2">
-            <Link 
-              to="/edit-details" 
+            <Link
+              to="/edit-details"
               className="block text-yellow-500 hover:underline text-lg md:text-base"
               onClick={toggleOptions}
             >
               Edit Details
             </Link>
-            <Link 
-              to="/login" 
+            <Link
+              to="/login"
               className="block text-yellow-500 hover:underline text-lg md:text-base"
               onClick={toggleOptions}
             >
@@ -47,33 +47,51 @@ const Home = () => {
         )}
       </nav>
 
-      <div className='flex justify-center items-center min-h-screen'>
-        <div className='bg-white text-black rounded-lg shadow-lg p-6 max-w-sm w-full mx-4'>
-          <h1 className='text-2xl font-semibold mb-4 text-center'>
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="bg-white text-black rounded-lg shadow-lg p-6 max-w-sm w-full mx-4">
+          <h1 className="text-2xl font-semibold mb-4 text-center">
             Realtime 3D Facial Reconstruction
           </h1>
-          <img src={threeD} alt="3D Face" className='w-full h-auto rounded-md mb-4' />
-          <button className='w-full py-2 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 transition duration-300'>
-            Try
-          </button>
+          <img
+            src={threeD}
+            alt="3D Face"
+            className="w-full h-auto rounded-md mb-4"
+          />
+          <Link to="/3d-face-reconstruction">
+            <button className="w-full py-2 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 transition duration-300">
+              Try
+            </button>
+          </Link>
         </div>
-        <div className='bg-white text-black rounded-lg shadow-lg p-6 max-w-sm w-full mx-4'>
-          <h1 className='text-2xl font-semibold mb-4 text-center'>
+        <div className="bg-white text-black rounded-lg shadow-lg p-6 max-w-sm w-full mx-4">
+          <h1 className="text-2xl font-semibold mb-4 text-center">
             Realtime Facial Reconstruction
           </h1>
-          <img src={threeD} alt="3D Face" className='w-full h-auto rounded-md mb-4' />
-          <button className='w-full py-2 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 transition duration-300'>
-            Try
-          </button>
+          <img
+            src={threeD}
+            alt="3D Face"
+            className="w-full h-auto rounded-md mb-4"
+          />
+          <Link to="/3d-face-reconstruction">
+            <button className="w-full py-2 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 transition duration-300">
+              Try
+            </button>
+          </Link>
         </div>
-        <div className='bg-white text-black rounded-lg shadow-lg p-6 max-w-sm w-full mx-4'>
-          <h1 className='text-2xl font-semibold mb-4 text-center'>
+        <div className="bg-white text-black rounded-lg shadow-lg p-6 max-w-sm w-full mx-4">
+          <h1 className="text-2xl font-semibold mb-4 text-center">
             Realtime Facial Reconstruction
           </h1>
-          <img src={threeD} alt="3D Face" className='w-full h-auto rounded-md mb-4' />
-          <button className='w-full py-2 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 transition duration-300'>
-            Try
-          </button>
+          <img
+            src={threeD}
+            alt="3D Face"
+            className="w-full h-auto rounded-md mb-4"
+          />
+          <Link to="/3d-face-reconstruction">
+            <button className="w-full py-2 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 transition duration-300">
+              Try
+            </button>
+          </Link>
         </div>
       </div>
 
